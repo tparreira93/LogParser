@@ -4,6 +4,6 @@ namespace Parser
 {
     public interface IParser
     {
-        ErrlogCpp Parse();
+        IErrlog Parse();
     }
 }

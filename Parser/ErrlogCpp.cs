@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Parser
 {
-    public class ErrlogCpp : IParsedFile
+    public class ErrlogCpp : IErrlog
     {
         public ErrlogCpp(IList<ILine> lines)
         {
@@ -12,5 +12,14 @@ namespace Parser
         }
 
         public IList<ILine> Lines { get; private set; }
+
+        public IList<ILine> FindRelevant()
+        {
+            List<ILine> lines = new List<ILine>();
+
+
+
+            return lines;
+        }
     }
 }
