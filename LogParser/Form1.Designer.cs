@@ -48,28 +48,30 @@
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.Location = new System.Drawing.Point(12, 31);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(1218, 28);
+            this.txtSearch.Size = new System.Drawing.Size(1223, 24);
             this.txtSearch.TabIndex = 1;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // status
             // 
+            this.status.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 684);
+            this.status.Location = new System.Drawing.Point(0, 686);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(1345, 25);
+            this.status.Size = new System.Drawing.Size(1345, 23);
             this.status.TabIndex = 2;
             this.status.Text = "statusStrip1";
             // 
             // statusLabel
             // 
+            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(151, 20);
+            this.statusLabel.Size = new System.Drawing.Size(148, 18);
             this.statusLabel.Text = "toolStripStatusLabel1";
             // 
             // listView
@@ -83,10 +85,11 @@
             this.listView.CellEditUseWholeCell = false;
             this.listView.Cursor = System.Windows.Forms.Cursors.Default;
             this.listView.EmptyListMsg = "No errors";
+            this.listView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.HideSelection = false;
-            this.listView.Location = new System.Drawing.Point(12, 65);
+            this.listView.Location = new System.Drawing.Point(12, 61);
             this.listView.Name = "listView";
             this.listView.RowHeight = 20;
             this.listView.ShowCommandMenuOnRightClick = true;
@@ -94,7 +97,7 @@
             this.listView.ShowImagesOnSubItems = true;
             this.listView.ShowItemCountOnGroups = true;
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(1321, 616);
+            this.listView.Size = new System.Drawing.Size(1321, 620);
             this.listView.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView.TabIndex = 4;
             this.listView.UseCompatibleStateImageBehavior = false;
@@ -108,12 +111,13 @@
             // 
             // menuStrip
             // 
+            this.menuStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1345, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1345, 26);
             this.menuStrip.TabIndex = 5;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -123,40 +127,44 @@
             this.openToolStripMenuItem,
             this.closeToolStripMenuItem,
             this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 22);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
+            this.openToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(121, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
+            this.closeToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(121, 26);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(120, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(121, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // btnFind
             // 
             this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFind.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFind.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFind.Image = global::LogParser.Properties.Resources.QuickFind_16x;
             this.btnFind.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFind.Location = new System.Drawing.Point(1236, 29);
+            this.btnFind.Location = new System.Drawing.Point(1241, 29);
             this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(97, 30);
+            this.btnFind.Size = new System.Drawing.Size(92, 26);
             this.btnFind.TabIndex = 6;
             this.btnFind.Text = "Search";
             this.btnFind.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
