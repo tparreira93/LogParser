@@ -32,12 +32,15 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.btnCancel = new System.Windows.Forms.ToolStripStatusLabel();
             this.listView = new BrightIdeasSoftware.FastObjectListView();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
             this.btnFind = new System.Windows.Forms.Button();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listView)).BeginInit();
@@ -49,10 +52,10 @@
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(12, 31);
+            this.txtSearch.Location = new System.Drawing.Point(163, 31);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(1223, 24);
-            this.txtSearch.TabIndex = 1;
+            this.txtSearch.Size = new System.Drawing.Size(1072, 24);
+            this.txtSearch.TabIndex = 2;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // status
@@ -60,7 +63,9 @@
             this.status.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
+            this.statusLabel,
+            this.toolProgress,
+            this.btnCancel});
             this.status.Location = new System.Drawing.Point(0, 686);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(1345, 23);
@@ -73,6 +78,21 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(148, 18);
             this.statusLabel.Text = "toolStripStatusLabel1";
+            // 
+            // toolProgress
+            // 
+            this.toolProgress.Enabled = false;
+            this.toolProgress.Name = "toolProgress";
+            this.toolProgress.Size = new System.Drawing.Size(100, 23);
+            this.toolProgress.Visible = false;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Image = global::LogParser.Properties.Resources.Cancel_16x;
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(20, 20);
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // listView
             // 
@@ -156,6 +176,20 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // comboBoxFilterType
+            // 
+            this.comboBoxFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFilterType.FormattingEnabled = true;
+            this.comboBoxFilterType.Items.AddRange(new object[] {
+            "Any text",
+            "Prefix",
+            "Regex"});
+            this.comboBoxFilterType.Location = new System.Drawing.Point(12, 31);
+            this.comboBoxFilterType.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxFilterType.Name = "comboBoxFilterType";
+            this.comboBoxFilterType.Size = new System.Drawing.Size(144, 24);
+            this.comboBoxFilterType.TabIndex = 1;
+            // 
             // btnFind
             // 
             this.btnFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -164,8 +198,8 @@
             this.btnFind.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFind.Location = new System.Drawing.Point(1241, 29);
             this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(92, 26);
-            this.btnFind.TabIndex = 6;
+            this.btnFind.Size = new System.Drawing.Size(92, 27);
+            this.btnFind.TabIndex = 3;
             this.btnFind.Text = "Search";
             this.btnFind.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnFind.UseVisualStyleBackColor = true;
@@ -173,9 +207,11 @@
             // 
             // MainForm
             // 
+            this.AcceptButton = this.btnFind;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1345, 709);
+            this.Controls.Add(this.comboBoxFilterType);
             this.Controls.Add(this.btnFind);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.status);
@@ -185,6 +221,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "Log";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listView)).EndInit();
@@ -206,6 +243,9 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.ComboBox comboBoxFilterType;
+        private System.Windows.Forms.ToolStripProgressBar toolProgress;
+        private System.Windows.Forms.ToolStripStatusLabel btnCancel;
     }
 }
 

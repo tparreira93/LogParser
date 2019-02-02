@@ -4,36 +4,45 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Parser
 {
-    public class CppLogParser : IParser
+    public class CppLogParser : BackgroundWorker, IParser
     {
         public string FileName { get; private set; }
         private Regex LogHeader = new Regex(@"(DATA=(\d{2}/\d{2}/\d{4}))( )*(HORA=(\d{2}:\d{2}:\d{2}))?( )*(MODULE=(\w+))?( )*(DB=(\w+))?( )*(CLIENT=(\w+))?( *)(NETUSER=([^\s]+))?( )*(LOGIN=([^\s]+))?( )*(LEVEL=([^\s]+))?( )*(PID=([^\s]+))?( )*(FUN.*=([^\s]+))?");
-
+        public IErrlog Result;
         public CppLogParser(string fileName)
         {
+            WorkerReportsProgress = true;
+            WorkerSupportsCancellation = true;
             FileName = fileName;
+            DoWork += Parse;
         }
 
-        public IErrlog Parse()
+        public void Parse(object sender, DoWorkEventArgs e)
         {
+            ReportProgress(0);
             IList<ILine> lines = new List<ILine>();
-            ErrlogCpp errlog = new ErrlogCpp(lines);
+            Result = new ErrlogCpp(lines);
             if (!File.Exists(FileName))
-                return errlog;
+                return;
             CultureInfo ptPT = new CultureInfo("pt-PT");
             DetectTextEncoding(FileName, out string t);
             IEnumerable<string> file = new List<string>(Regex.Split(t, "\r\n"));
             CppLogLine line = null;
             StringBuilder text = new StringBuilder();
+            int count = file.Count();
+            int progress = 0;
+            int percent = 0;
             foreach (var item in file)
             {
                 Match match = LogHeader.Match(item);
                 if (match.Success)
                 {
-                    if (text.Length != 0)
+                    if (text.Length != 0 && line != null)
                         line.Text = text.ToString();
 
                     if (line != null)
@@ -60,13 +69,20 @@ namespace Parser
                     text = new StringBuilder();
                 }
                 else
-                    text.Append(item);
+                    text.Append(item).Append(Environment.NewLine);
+                progress++;
+                int tmp = progress * 100 / count;
+                if (tmp != percent)
+                    ReportProgress(tmp);
+
+                percent = tmp;
+
+                if (CancellationPending)
+                    break;
             }
 
             if (line != null)
                 lines.Add(line);
-            
-            return errlog;
         }
 
         // Function to detect the encoding for UTF-7, UTF-8/16/32 (bom, no bom, little
@@ -166,6 +182,13 @@ namespace Parser
             // A full list can be found using Encoding.GetEncodings();
             text = Encoding.GetEncoding(1252).GetString(b);
             return Encoding.GetEncoding(1252);
+        }
+
+        public IErrlog Parse()
+        {
+            Parse(null, null);
+
+            return Result;
         }
     }
 }

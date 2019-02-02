@@ -18,11 +18,13 @@ namespace LogParser
     {
         private string filePath;
         private IErrlog errlog;
+        private CppLogParser parser;
         public MainForm()
         {
             InitializeComponent();
             filePath = "";
             UpdateStatusStrip();
+            comboBoxFilterType.SelectedIndex = 0;
         }
 
         void UpdateStatusStrip()
@@ -55,6 +57,9 @@ namespace LogParser
             if (fileDialog.ShowDialog() != DialogResult.OK)
                 return;
 
+            toolProgress.Visible = true;
+            menuStrip.Enabled = false;
+            btnCancel.Visible = true;
             filePath = fileDialog.FileName;
 
             Type t = typeof(CppLogLine);
@@ -62,17 +67,50 @@ namespace LogParser
             listView.Columns.AddRange(t.GetProperties().Select(x => x.PropertyType.Equals(typeof(DateTime)) ?
                 new OLVColumn(x.Name, x.Name) { Width = 145, ClusteringStrategy = new DateTimeClusteringStrategy(DateTimePortion.Day | DateTimePortion.Month | DateTimePortion.Year, "dd/MM/yyyy") }
                 : new OLVColumn(x.Name, x.Name) { Width = 145 }).ToArray());
-            CppLogParser parser = new CppLogParser(filePath);
-            errlog = parser.Parse();
+            parser = new CppLogParser(filePath);
+            parser.ProgressChanged += worker_ProgressChanged;
+            parser.RunWorkerCompleted += worker_end;
+            parser.RunWorkerAsync();
+        }
 
-            listView.SetObjects(errlog.Lines);
+        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolProgress.Value = e.ProgressPercentage;
+        }
+
+        private void worker_end(object sender, RunWorkerCompletedEventArgs e)
+        {
+            errlog = parser.Result;
+            if (errlog != null)
+                listView.SetObjects(errlog.Lines);
+            toolProgress.Value = 100;
+            toolProgress.Visible = false;
+            btnCancel.Visible = false;
+            menuStrip.Enabled = true;
         }
 
         private void btnFind_Click(object sender, EventArgs e)
         {
+            Find();
+        }
+        private void Find()
+        {
             string[] txt = txtSearch.Text.Split('|').Select(x => x.Trim()).ToArray();
+            TextMatchFilter filter = null;
 
-            TextMatchFilter filter = TextMatchFilter.Contains(listView, txt);
+            switch (comboBoxFilterType.SelectedIndex)
+            {
+                case 0:
+                default:
+                    filter = TextMatchFilter.Contains(listView, txt);
+                    break;
+                case 1:
+                    filter = TextMatchFilter.Prefix(listView, txt);
+                    break;
+                case 2:
+                    filter = TextMatchFilter.Regex(listView, txt);
+                    break;
+            }
             listView.DefaultRenderer = new HighlightTextRenderer(filter);
             listView.AdditionalFilter = filter;
 
@@ -81,13 +119,22 @@ namespace LogParser
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                btnFind.PerformClick();
         }
 
         private void listView_ItemsChanged(object sender, ItemsChangedEventArgs e)
         {
             UpdateStatusStrip();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            parser.CancelAsync();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (parser != null && parser.IsBusy)
+                parser.CancelAsync();
         }
     }
 }
