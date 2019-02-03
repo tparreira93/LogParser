@@ -127,6 +127,8 @@
             this.listView.View = System.Windows.Forms.View.Details;
             this.listView.VirtualMode = true;
             this.listView.ItemsChanged += new System.EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(this.listView_ItemsChanged);
+            this.listView.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView_DragDrop);
+            this.listView.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_DragEnter);
             this.listView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // menuStrip

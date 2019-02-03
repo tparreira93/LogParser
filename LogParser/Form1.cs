@@ -48,19 +48,18 @@ namespace LogParser
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            listView.Items.Clear();
+            this.Text = string.Format("Log");
+            listView.ClearObjects();
+            listView.Columns.Clear();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFile(string file)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            if (fileDialog.ShowDialog() != DialogResult.OK)
-                return;
-
             toolProgress.Visible = true;
             menuStrip.Enabled = false;
             btnCancel.Visible = true;
-            filePath = fileDialog.FileName;
+            filePath = file;
+            this.Text = string.Format("Log [{0}]", filePath);
 
             Type t = typeof(CppLogLine);
             PropertyInfo[] props = t.GetProperties();
@@ -71,6 +70,15 @@ namespace LogParser
             parser.ProgressChanged += worker_ProgressChanged;
             parser.RunWorkerCompleted += worker_end;
             parser.RunWorkerAsync();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if (fileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            OpenFile(fileDialog.FileName);
         }
 
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -135,6 +143,18 @@ namespace LogParser
         {
             if (parser != null && parser.IsBusy)
                 parser.CancelAsync();
+        }
+
+        private void listView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void listView_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length == 1)
+                OpenFile(files[0]);
         }
     }
 }
