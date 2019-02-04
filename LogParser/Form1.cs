@@ -48,9 +48,15 @@ namespace LogParser
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Clear();
+        }
+
+        private void Clear()
+        {
             this.Text = string.Format("Log");
             listView.ClearObjects();
             listView.Columns.Clear();
+            GC.Collect();
         }
 
         private void OpenFile(string file)
@@ -59,6 +65,7 @@ namespace LogParser
             menuStrip.Enabled = false;
             btnCancel.Visible = true;
             filePath = file;
+            Clear();
             this.Text = string.Format("Log [{0}]", filePath);
 
             Type t = typeof(CppLogLine);
@@ -95,6 +102,8 @@ namespace LogParser
             toolProgress.Visible = false;
             btnCancel.Visible = false;
             menuStrip.Enabled = true;
+
+            GC.Collect();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
