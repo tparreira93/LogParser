@@ -156,5 +156,11 @@ namespace LogParser
             if (files.Length == 1)
                 OpenFile(files[0]);
         }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
     }
 }
