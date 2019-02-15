@@ -43,7 +43,7 @@ namespace Parser
                 if (match.Success)
                 {
                     if (text.Length != 0 && line != null)
-                        line.Text = text.ToString();
+                        line.Text = text.ToString().Trim();
 
                     if (line != null)
                         lines.Add(line);
@@ -82,7 +82,10 @@ namespace Parser
             }
 
             if (line != null)
+            {
+                line.Text = text.ToString().Trim();
                 lines.Add(line);
+            }
         }
 
         // Function to detect the encoding for UTF-7, UTF-8/16/32 (bom, no bom, little
