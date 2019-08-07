@@ -7,4 +7,4 @@ It is currently being used as the tool for parsing errors at HR Information Syst
 
 ## Demo
 
-![Errlog file](https://github.com/tparreira93/LogpParser/Demo/demo1.png)
+![Errlog file](https://github.com/tparreira93/LogParser/blob/master/Demo/demo1.png)
